@@ -28,6 +28,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
         tags: |
           $(tag)
+    - script: echo $(dockerId) $(dockerPassword) 
     - script: docker login -u $(dockerId) -p $(dockerPassword)
       displayName: 'docker login'
       condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
