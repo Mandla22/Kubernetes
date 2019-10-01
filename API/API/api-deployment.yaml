@@ -1,0 +1,74 @@
+kind: Service
+apiVersion: v1
+metadata:
+ name: api-service
+ labels:
+    app: my-app
+spec:
+ selector:
+  app: my-app
+ ports:
+ - protocol: TCP
+   port: 80
+   nodePort: 32322
+   targetPort: 5000
+ type: NodePort
+ 
+---
+ 
+apiVersion: v1
+kind: Service
+metadata:
+  name: cluster-service
+  labels:
+    app: my-app
+spec:
+  ports:
+  - port: 1000
+    targetPort: 5000
+    protocol: TCP
+  selector:
+    app: my-app
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: container
+        image: mandla21/api:work-cors
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: console-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: console
+  template:
+    metadata:
+      labels:
+        app: console
+    spec:
+      containers:
+      - name: console-container
+        image: mandla21/console:work
+        imagePullPolicy: Always
+---
