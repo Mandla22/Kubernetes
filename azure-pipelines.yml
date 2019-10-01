@@ -21,6 +21,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - script: "$(dockerId)"
-    - script: "$(dockerPassword)"
+    - script: echo "$(dockerId)"
+    - script: echo "$(dockerPassword)"
       
