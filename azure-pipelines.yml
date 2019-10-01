@@ -1,0 +1,37 @@
+# Docker
+# Build a Docker image 
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: 'mandla21/api:pipeline'
+  imageName: '$(dockerId)/api:pipeline'
+
+stages:
+- stage: Build
+  displayName: Build api image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      displayName: Build an image
+      inputs:
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
+        tags: |
+          $(tag)
+    - script: docker login -u $(dockerId) -p $(dockerPassword)
+      displayName: 'docker login'
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+    - script: docker push $(imageName)
+      displayName: 'docker push latest if this is the master branch'
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
