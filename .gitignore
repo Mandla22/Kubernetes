@@ -7,3 +7,9 @@
 *.tmp_proj
 *.meta
 *.obj
+*.cache
+
+obj/
+publish/
+bin/
+
