@@ -10,7 +10,7 @@ resources:
 
 variables:
   tag: 'mandla21/api:pipeline'
-  imageName: '$(dockerId)/api:pipeline'
+  imageName: '$(username)/api:pipeline'
 
 stages:
 - stage: Build
@@ -22,5 +22,5 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - script: echo "$(username)"
-    - script: echo "$(dockerPassword)"
+    - script: echo "$(password)"
       
