@@ -25,7 +25,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: build
-        repository: mandla21/
+        repository: mandla21/api
         dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
         tags: $(tag)
     - script: docker login -u $(username) -p $(password)
