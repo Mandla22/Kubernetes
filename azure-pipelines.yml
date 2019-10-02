@@ -28,3 +28,18 @@ stages:
     - script: docker login -u $(username) -p $(password)
       displayName: 'docker login'
     - script: docker push mandla21/api:pipeline
+
+- stage: Deploy
+  displayName: Deploy to minikube
+  jobs:
+  - job: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: "KubernetesManifest@0"
+      displayName: "Deploy"
+      inputs:
+        kubernetesServiceConnection: "Minikube"
+        namespace: "default"
+        #manifests: "manifests/*"
+        containers: 'mandla21/api:pipeline'
