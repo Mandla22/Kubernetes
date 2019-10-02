@@ -9,7 +9,10 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  - name: tag
+    value: "api:pipeline"
+
+  -
 
 stages:
 - stage: Build
@@ -21,9 +24,15 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
-      displayName: Build an image
+      displayName: Build and push an image to container registry
       inputs:
-        command: build
+        command: buildAndPush
+        repository: mandla21
         dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
-        tags: |
-          $(tag)
+        containerRegistry: $(service)
+        tags: $(tag)
+
+    - task: PublishPipelineArtifact@0
+      inputs:
+        artifactName: 'manifests'
+        targetPath: 'manifests'
