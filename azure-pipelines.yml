@@ -20,7 +20,7 @@ stages:
     - task: "KubernetesManifest@0"
       displayName: "Deploy"
       inputs:
-        kubernetesServiceConnection: $(Minikube)
+        kubernetesServiceConnection: '$(Minikube)'
         namespace: "default"
         #manifests: "manifests/*"
         containers: 'mandla21/api:pipeline'
