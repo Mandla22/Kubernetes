@@ -10,25 +10,6 @@ variables:
     value: "pipeline"
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:  
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: build
-        repository: mandla21/api
-        dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
-        tags: $(tag)
-    - script: docker login -u $(username) -p $(password)
-      displayName: 'docker login'
-    - script: docker push mandla21/api:pipeline
-
 - stage: Deploy
   displayName: Deploy to minikube
   jobs:
