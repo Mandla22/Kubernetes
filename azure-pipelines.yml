@@ -25,7 +25,7 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
-        repository: mandla21
+        repository: Kubernetes
         dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
         containerRegistry: $(service)
         tags: $(tag)
