@@ -23,7 +23,7 @@ stages:
     steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
-    - script: docker build -t mandla21/api:pipeline '$(Build.SourcesDirectory)/API/API/dockerfile'
+    - script: docker build -t mandla21/api:pipeline '/API/API/dockerfile'
     - script: docker login -u $(username) -p $(password)
       displayName: 'docker login'
     - script: docker push mandla21/api:pipeline
