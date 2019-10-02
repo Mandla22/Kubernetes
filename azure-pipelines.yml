@@ -27,9 +27,10 @@ stages:
         command: buildAndPush
         repository: Kubernetes
         dockerfile: '$(Build.SourcesDirectory)/API/API/dockerfile'
-        containerRegistry: $(service)
         tags: $(tag)
-
+    - script: docker login -u $(username) -p $(password)
+      displayName: 'docker login'
+    - script: docker push mandla21/$(tag)
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'manifests'
