@@ -30,7 +30,7 @@ stages:
         tags: $(tag)
     - script: docker login -u $(username) -p $(password)
       displayName: 'docker login'
-    - script: docker push mandla21/mandla21:pipeline
+    - script: docker push mandla21/api:pipeline
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'manifests'
