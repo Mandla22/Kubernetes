@@ -6,8 +6,7 @@ resources:
 - repo: self
 
 variables:
-  - name: tag
-    value: "pipeline"
+  kubernetesServiceConnection: Minikube
 
 stages:
 - stage: Deploy
@@ -20,7 +19,7 @@ stages:
     - task: "KubernetesManifest@0"
       displayName: "Deploy"
       inputs:
-        kubernetesServiceConnection: $(Minikube)
+        kubernetesServiceConnection: $(kubernetesServiceConnection)
         namespace: "default"
         #manifests: "manifests/*"
         containers: 'mandla21/api:pipeline'
